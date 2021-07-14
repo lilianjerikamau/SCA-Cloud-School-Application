@@ -3,6 +3,6 @@
 
 
 
-## JENKINS LINK http://a66183f28757.ngrok.io/github-webhook/
+## JENKINS LINK http://a66183f28757.ngrok.io/
 ## username lilianjerikamau
 ## password linahjerry123.
