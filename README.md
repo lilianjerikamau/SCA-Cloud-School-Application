@@ -22,28 +22,28 @@ Declarative pipeline syntax offers an easy way to create pipelines. It contains 
 ## Example
 
 
-## pipeline {
- ##   agent any
-   ## stages {
-   ## stage('Source') {
-   ##       steps { 
-   ##      echo 'Creating'
-   ##  }
-  ##   }
-  ## stages {
- ##     stage('Build') {
- ##          steps { 
- ##          echo 'Building'
-##            }
-##        }
-##      stages {
-##        stage('Deploy') {
- ##           steps { 
-   ##   echo 'Deploying'
-   ## }
-   ##  }   
-  ##  }
-## }
+ pipeline {
+  agent any
+  stages {
+  stage('Source') {
+        steps { 
+      echo 'Creating'
+    }
+  }
+   stages {
+     stage('Build') {
+          steps { 
+         echo 'Building'
+           }
+      }
+     stages {
+        stage('Deploy') {
+         steps { 
+   echo 'Deploying'
+          }
+      }   
+    }
+  
 
 ## Scripted:
 
@@ -52,18 +52,18 @@ Scripted Jenkins pipeline runs on the Jenkins master with the help of a lightwei
 
  ## Example  
      
-  ## node {
-   ## stage('Source')
-  ##  {
-  ##  echo 'Creating'
-  ##  }
-   ##   stage('Build')
-   ## {
-   ##     echo 'Building'
-  ##  }
-   ##   stage('Deploy')
-  ##  {
-   ##     echo 'Deploying'
-   ## }
-   ##    }
+   node {
+    stage('Source')
+    {
+    echo 'Creating'
+   }
+     stage('Build')
+   {
+       echo 'Building'
+   }
+     stage('Deploy')
+   {
+      echo 'Deploying'
+  }
+     }
        
