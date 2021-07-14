@@ -24,8 +24,9 @@ Declarative pipeline syntax offers an easy way to create pipelines. It contains 
 
  pipeline {
   agent any
-  stages {
-  stage('Source') {
+  
+   stages {
+    stage('Source') {
         steps { 
       echo 'Creating'
     }
@@ -43,6 +44,7 @@ Declarative pipeline syntax offers an easy way to create pipelines. It contains 
           }
       }   
     }
+    
   
 
 ## Scripted:
@@ -51,8 +53,7 @@ Scripted Jenkins pipeline runs on the Jenkins master with the help of a lightwei
 
 
  ## Example  
-   #!/usr/bin/env groovy 
-   node {
+ node {
     stage('Source')
     {
     echo 'Creating'
@@ -64,47 +65,10 @@ Scripted Jenkins pipeline runs on the Jenkins master with the help of a lightwei
      stage('Deploy')
    {
       echo 'Deploying'
-  }
-     }
+   }    
+ }
      
-     #!/usr/bin/env groovy
-pipeline {
-  agent any
 
-  stages {
-    stage("Build") {
-      steps {
-        sh 'mvn -v'
-      }
-    }
 
-    stage("Testing") {
-      parallel {
-        stage("Unit Tests") {
-          agent { docker 'openjdk:7-jdk-alpine' }
-          steps {
-            sh 'java -version'
-          }
-        }
-        stage("Functional Tests") {
-          agent { docker 'openjdk:8-jdk-alpine' }
-          steps {
-            sh 'java -version'
-          }
-        }
-        stage("Integration Tests") {
-          steps {
-            sh 'java -version'
-          }
-        }
-      }
-    }
-
-    stage("Deploy") {
-      steps {
-        echo "Deploy!"
-      }
-    }
-  }
-}
+  
        
