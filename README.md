@@ -51,7 +51,7 @@ Scripted Jenkins pipeline runs on the Jenkins master with the help of a lightwei
 
 
  ## Example  
-     
+   #!/usr/bin/env groovy 
    node {
     stage('Source')
     {
