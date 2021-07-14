@@ -66,4 +66,45 @@ Scripted Jenkins pipeline runs on the Jenkins master with the help of a lightwei
       echo 'Deploying'
   }
      }
+     
+     #!/usr/bin/env groovy
+pipeline {
+  agent any
+
+  stages {
+    stage("Build") {
+      steps {
+        sh 'mvn -v'
+      }
+    }
+
+    stage("Testing") {
+      parallel {
+        stage("Unit Tests") {
+          agent { docker 'openjdk:7-jdk-alpine' }
+          steps {
+            sh 'java -version'
+          }
+        }
+        stage("Functional Tests") {
+          agent { docker 'openjdk:8-jdk-alpine' }
+          steps {
+            sh 'java -version'
+          }
+        }
+        stage("Integration Tests") {
+          steps {
+            sh 'java -version'
+          }
+        }
+      }
+    }
+
+    stage("Deploy") {
+      steps {
+        echo "Deploy!"
+      }
+    }
+  }
+}
        
