@@ -21,35 +21,37 @@ Declarative pipeline syntax offers an easy way to create pipelines. It contains 
 
 ## Example
 
+```java
 
-
-pipeline {
-    agent none 
-    stages {
-        stage(' Source') {
-            agent { docker 'maven:3-alpine' } 
-            steps {
-                echo 'Hello, Maven'
-                sh 'mvn --version'
+pipeline{
+  agent any
+  stages{
+    stage("Git Checkout"){
+      steps{
+            git credentialsId: 'github', url: 'https://github.com/aditya-malviya/myweb.git'
+           }
+          }
+     stage("Maven Build"){
+       steps{
+            sh "mvn clean package"
+            sh "mv target/*.war target/myweb.war"
+             }
             }
-        }
-        stage('Build') {
-            agent { docker 'openjdk:8-jre' } 
-            steps {
-                echo 'Hello, JDK'
-                sh 'java -version'
+     stage("deploy-dev"){
+       steps{
+          sshagent(['tomcat-dev1']) {
+          sh """
+          scp -o StrictHostKeyChecking=no target/myweb.war  
+          ubuntu@yourip:/opt/tomcat/webapps/
+          ssh ubuntu@yourip /opt/tomcat/bin/shutdown.sh
+          ssh ubuntu@yourip /opt/tomcat/bin/startup.sh
+           """
             }
+          }
         }
-        stage(' Source') {
-            agent { docker 'maven:3-alpine' } 
-            steps {
-                echo 'Hello, Maven'
-                sh 'mvn --version'
-            }
-        }
+      }
     }
-}
-// Script //
+```
     
   
 
@@ -59,7 +61,7 @@ Scripted Jenkins pipeline runs on the Jenkins master with the help of a lightwei
 
 
  ## Example 
- 
+ ```java
 node {
     stage('Source') {
         try {
@@ -87,7 +89,7 @@ node {
         }
     }
 }
-     
+  ```   
 
  
   
