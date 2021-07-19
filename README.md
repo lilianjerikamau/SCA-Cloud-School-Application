@@ -28,7 +28,7 @@ pipeline{
   stages{
     stage("Git Checkout"){
       steps{
-            git credentialsId: 'github', url: 'https://github.com/aditya-malviya/myweb.git'
+            git credentialsId: 'github', url: 'https://github.com/lilianjerikamau/SCA-Cloud-School-Application.git'
            }
           }
      stage("Maven Build"){
