@@ -62,31 +62,15 @@ Scripted Jenkins pipeline runs on the Jenkins master with the help of a lightwei
 
  ## Example 
  ```java
-node {
-    stage('Source') {
-        try {
-            sh 'exit 1'
-        }
-        catch (exc) {
-            echo 'Something failed, I should sound the klaxons!'
-            throw
-        }
-     stage('Build') {
-        try {
-            sh 'exit 2'
-        }
-        catch (exc) {
-            echo 'Something failed, I should sound the klaxons!'
-            throw
-        }
-       stage('Deploy') {
-        try {
-            sh 'exit 3'
-        }
-        catch (exc) {
-            echo 'Something failed, I should sound the klaxons!'
-            throw
-        }
+node {  
+    stage('Git Checkout') { 
+        git credentialsId: 'github', url: 'https://github.com/lilianjerikamau/SCA-Cloud-School-Application.git'
+    }
+    stage('Maven Build') { 
+       buildInfo = rtGradle.run rootDir: "gradle-examples/4/gradle-example-ci-server/", buildFile: 'build.gradle', tasks: 'clean artifactoryPublish'
+    }
+    stage('deploy-dev') { 
+      server.publishBuildInfo buildInfo
     }
 }
   ```   
