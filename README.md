@@ -3,7 +3,7 @@
 
 
 
-## JENKINS LINK http://804318880022.ngrok.io/github-webhook//job/SCA%20Cloud%20School%20Application/
+## JENKINS LINK https://804318880022.ngrok.io/job/SCA%20Cloud%20School%20Application/
    ## username lilianjerikamau
    ## password linahjerry123.
         
