@@ -22,28 +22,34 @@ Declarative pipeline syntax offers an easy way to create pipelines. It contains 
 ## Example
 
 
- pipeline {
-  agent any
-  
-   stages {
-    stage('Source') {
-        steps { 
-      echo 'Creating'
+
+pipeline {
+    agent none 
+    stages {
+        stage(' Source') {
+            agent { docker 'maven:3-alpine' } 
+            steps {
+                echo 'Hello, Maven'
+                sh 'mvn --version'
+            }
+        }
+        stage('Build') {
+            agent { docker 'openjdk:8-jre' } 
+            steps {
+                echo 'Hello, JDK'
+                sh 'java -version'
+            }
+        }
+        stage(' Source') {
+            agent { docker 'maven:3-alpine' } 
+            steps {
+                echo 'Hello, Maven'
+                sh 'mvn --version'
+            }
+        }
     }
-  }
-   stages {
-     stage('Build') {
-          steps { 
-         echo 'Building'
-           }
-      }
-     stages {
-        stage('Deploy') {
-         steps { 
-   echo 'Deploying'
-          }
-      }   
-    }
+}
+// Script //
     
   
 
@@ -52,21 +58,35 @@ Declarative pipeline syntax offers an easy way to create pipelines. It contains 
 Scripted Jenkins pipeline runs on the Jenkins master with the help of a lightweight executor. It uses very few resources to translate the pipeline into atomic commands. Both declarative and scripted syntax are different from each other and are defined totally differently.
 
 
- ## Example  
- node {
-    stage('Source')
-    {
-    echo 'Creating'
-   }
-     stage('Build')
-   {
-       echo 'Building'
-   }
-     stage('Deploy')
-   {
-      echo 'Deploying'
-   }    
- }
+ ## Example 
+ 
+node {
+    stage('Source') {
+        try {
+            sh 'exit 1'
+        }
+        catch (exc) {
+            echo 'Something failed, I should sound the klaxons!'
+            throw
+        }
+     stage('Build') {
+        try {
+            sh 'exit 2'
+        }
+        catch (exc) {
+            echo 'Something failed, I should sound the klaxons!'
+            throw
+        }
+       stage('Deploy') {
+        try {
+            sh 'exit 3'
+        }
+        catch (exc) {
+            echo 'Something failed, I should sound the klaxons!'
+            throw
+        }
+    }
+}
      
 
  
